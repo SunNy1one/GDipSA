@@ -7,7 +7,7 @@ namespace ShoppingCart.Models
         MySqlConnection con {  get; set; }
         public DbContext() 
         {
-            con = new MySqlConnection("server=localhost;uid=root;pwd=Password123!;database=northwind");
+            con = new MySqlConnection("server=localhost;uid=root;pwd=Password123!;database=ShoppingCart");
         }
 
         // Purchase Ops
