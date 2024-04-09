@@ -1,4 +1,9 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿
+window.onload = function () {
 
-// Write your JavaScript code.
+    // Login logic
+    const loginEl = document.getElementById("login-form");
+    loginEl.onsubmit = function (event) {
+        event.preventDefault();
+    }
+}
