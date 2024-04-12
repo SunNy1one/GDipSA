@@ -1,3 +1,4 @@
+using ShoppingCart.Models;
 using ShoppingCart.Models.Middleware;
 
 namespace ShoppingCart
@@ -11,6 +12,7 @@ namespace ShoppingCart
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddSession();
+            builder.Services.AddSingleton<DbContext>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

@@ -13,11 +13,7 @@
             this.firstName = firstName;
             this.lastName = lastName;
         }
-        public static LoginStatus Login(string username, string passhash)
-        {
-            // TODO
-            return LoginStatus.Success;
-        }
+        
 
     }
 

@@ -5,6 +5,10 @@ namespace ShoppingCart.Controllers
 {
     public class LoginController : Controller
     {
+        private readonly DbContext db;
+        public LoginController(DbContext db) {
+            this.db = db;
+        }
         public IActionResult Index()
         {
             Response.Cookies.Delete("SessionId");
@@ -15,7 +19,8 @@ namespace ShoppingCart.Controllers
         public IActionResult Login(string username, string password)
         {
             
-            if (ShoppingCart.Models.User.Login(username, password) == LoginStatus.Success)
+           
+            if (db.Login(username, password) == LoginStatus.Success)
             {
                 return StartSession();
             }
