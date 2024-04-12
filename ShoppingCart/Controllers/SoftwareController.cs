@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ShoppingCart.Models;
 
 namespace ShoppingCart.Controllers
 {
@@ -6,7 +7,8 @@ namespace ShoppingCart.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            Data data = new Data();
+            return View(data.softwares);
         }
 
         public IActionResult Reviews()

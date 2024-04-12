@@ -1,5 +1,11 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model List<Software>
 @{
 }
+
+<div class="col-sm-3 m-1">
+    <img src="~/images/chart.jpg" style="width:250px"/>
+    <br />
+    <b>@Model.First().softwareName</b>
+    <br />
+    <p>@Model.First().description</p>
+</div>

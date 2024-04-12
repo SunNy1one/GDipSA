@@ -1,3 +1,5 @@
+using ShoppingCart.Models.Middleware;
+
 namespace ShoppingCart
 {
     public class Program
@@ -26,6 +28,7 @@ namespace ShoppingCart
 
             app.UseAuthorization();
             app.UseSession();
+            app.UseMiddleware<LoginStatusCheck>();
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Login}/{action=Index}/{id?}");

@@ -1,5 +1,5 @@
 # CREATE DATABASE ShoppingCart;
-use ShoppingCart;
+# use ShoppingCart;
 
 # CREATE TABLE User (UserID VARCHAR(10), Username VARCHAR(30), HashedPass VARCHAR(80), FirstName VARCHAR(50), LastName VARCHAR(50), PRIMARY KEY(UserID));
 # DROP Table User;
@@ -20,6 +20,9 @@ use ShoppingCart;
 -- INSERT INTO User (UserID, Username, FirstName, LastName) VALUES ("5", "YanYan", "Nan", "Y");
 -- INSERT INTO User (UserID, Username, FirstName, LastName) VALUES ("6", "Xixi", "Haoxi", "D");
 -- SELECT * FROM User;
+-- Set sql_safe_updates = 0;
+-- UPDATE User set HashedPass = 'Password123!';
+-- Set sql_safe_updates = 1;
 
 -- INSERT INTO Software (SoftwareID, SoftwareName, Descr, Price, ImageURL) VALUES ("1", "Charts", "Data visual tools", 99.0, "/images/charts.jpg");
 -- INSERT INTO Software (SoftwareID, SoftwareName, Descr, Price, ImageURL) VALUES ("2", "Paypal", "e-Payment tools", 99.0, "/images/paypal.jpg");
