@@ -1,8 +1,14 @@
 ﻿@model List<Software>
 @{
 }
-
-<div class="col-sm-3 m-1">
+<style>
+    .software-card {
+        box-shadow: 2px 4px 2px 4px rgba(0,0,0, 0.2);
+        border-radius: 10px;
+        padding: 10px;
+    }
+</style>
+<div class="col-sm-3 m-1 software-card">
     <img src="~/images/chart.jpg" style="width:250px"/>
     <br />
     <b>@Model.First().softwareName</b>

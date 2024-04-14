@@ -18,13 +18,11 @@ namespace ShoppingCart.Controllers
 
         public IActionResult Login(string username, string password)
         {
-            
-           
             if (db.Login(username, password) == LoginStatus.Success)
             {
                 return StartSession();
             }
-            return Json(new {result = "Log in failed."});
+            return View("Index", new LoginResult("Log in failed."));
         }
 
         public IActionResult StartSession()
@@ -40,6 +38,16 @@ namespace ShoppingCart.Controllers
         {
             Response.Cookies.Delete("SessionId");
             return RedirectToAction("Index");
+        }
+    }
+
+    public class LoginResult
+    {
+        public string result { get; set; } = "";
+
+        public LoginResult(string res)
+        {
+            this.result = res;
         }
     }
 }

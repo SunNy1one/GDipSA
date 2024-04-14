@@ -13,7 +13,6 @@ namespace ShoppingCart.Models.Middleware
 
         public async Task Invoke(HttpContext context)
         {
-            Debug.WriteLine(context.Request.Path);
             if (context.Request.Path == "/login/" || context.Request.Path == "/Login/Login")
             {
                 await next(context);

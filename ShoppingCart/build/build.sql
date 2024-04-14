@@ -47,3 +47,9 @@
 -- INSERT INTO PurchaseSoftware (PurchaseId, SoftwareId, ActivationCode) VALUES ('5', '6', '4ce6f0d6-2581-4cdd-b995-15a83357ac1a');
 -- INSERT INTO PurchaseSoftware (PurchaseId, SoftwareId, ActivationCode) VALUES ('6', '5', '38a41ced-4d8d-45c3-97e5-c6cf8c732c45');
 -- SELECT * FROM PurchaseSoftware;
+
+use shoppingcart;
+SELECT 1 as Col FROM Purchase where PurchaseID = 10 and UserId = 2;
+SELECT * FROM User;
+SELECT * FROM User WHERE username = 'Keke'
+
