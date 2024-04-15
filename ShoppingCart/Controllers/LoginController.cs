@@ -20,17 +20,19 @@ namespace ShoppingCart.Controllers
         {
             if (db.Login(username, password) == LoginStatus.Success)
             {
-                return StartSession();
+                return StartSession(username);
             }
             return View("Index", new LoginResult("Log in failed."));
         }
 
-        public IActionResult StartSession()
+        public IActionResult StartSession(string username)
         {
             string sessionId = System.Guid.NewGuid().ToString();
             CookieOptions options = new CookieOptions();
             options.Expires = DateTime.Now.AddMinutes(10);
             Response.Cookies.Append("SessionId", sessionId, options);
+            ISession session = HttpContext.Session;
+            session.SetString("username", username);
             return RedirectToAction("Index", "Software");
         }
 

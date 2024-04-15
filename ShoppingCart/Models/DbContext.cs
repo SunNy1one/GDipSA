@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using MySqlX.XDevAPI.Common;
 
 namespace ShoppingCart.Models
 {
@@ -28,8 +29,8 @@ namespace ShoppingCart.Models
                     cmd = new MySqlCommand(sql, con);
                     cmd.Parameters.Add(new MySqlParameter("userId", userId));
                     cmd.Parameters.Add(new MySqlParameter("passhash", passhash));
-                    MySqlDataReader reader2 = cmd.ExecuteReader();
-                    if(reader2.Read())
+                    reader = cmd.ExecuteReader();
+                    if(reader.Read())
                     {
                         return LoginStatus.Success;
                     } else
@@ -53,7 +54,83 @@ namespace ShoppingCart.Models
         }
 
         // Purchase Ops
+        public List<Software> Search(string searchEntry)
+        {
+            List<Software> result = new List<Software>();
+            try
+            {
+                con.Open();
+                string sql = @"SELECT * FROM Software WHERE SoftwareName like '%" + searchEntry+"%' or Descr like '%" + searchEntry + "%'";
+                MySqlCommand cmd = new MySqlCommand(sql, con);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                
+                while(reader.Read())
+                {
+                    Software soft = new Software((string)reader["SoftwareId"], (string)reader["SoftwareName"], (string)reader["Descr"], Double.Parse(((decimal)reader["price"]).ToString()), (string)reader["ImageURL"]) ;
+                    result.Add(soft);
+                }
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+                
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
+
+        public List<Software> GetAllSoftware()
+        {
+            return Search("");
+        }
 
         // User Ops
+
+        public List<Purchase> GetPastPurchase(string userId)
+        {
+            List<Purchase> purchases = new List<Purchase>();
+            List<Purchase.PurchaseUnit> units = new List<Purchase.PurchaseUnit>();
+            try
+            {
+                con.Open();
+                string sql = @"SELECT PurchaseId, DateOfPurchase FROM Purchase WHERE UserId = @userid";
+                MySqlCommand cmd = new MySqlCommand(sql, con);
+                cmd.Parameters.Add(new MySqlParameter("userid", userId));
+                MySqlDataReader reader = cmd.ExecuteReader();
+                while(reader.Read())
+                {
+                    Purchase purchase = new Purchase((string)reader["PurchaseId"], userId, (DateTime)reader["DateOfPurchase"], new List<Purchase.PurchaseUnit>());
+                    purchases.Add(purchase);
+                }
+                reader.Close();
+                MySqlCommand cmdpu;
+                MySqlDataReader readerpu;
+                foreach (Purchase purchase in purchases)
+                {
+                    string sqlpu = @"SELECT s.SoftwareId, s.SoftwareName, s.ImageURL, s.Descr, ps.ActivationCode FROM PurchaseSoftware ps inner join Software s on ps.SoftwareId = s.SoftwareId where ps.PurchaseId = @purchaseid";
+                    cmdpu = new MySqlCommand(sqlpu, con);
+                    cmdpu.Parameters.Add(new MySqlParameter("purchaseid", purchase.purchaseId));
+                    readerpu = cmdpu.ExecuteReader();
+                    while(readerpu.Read())
+                    {
+                        Purchase.PurchaseUnit unit = new Purchase.PurchaseUnit(purchase.purchaseId, (string)reader["SoftwareId"], (string)reader["ActivationCode"]);
+                        purchase.purchaseUnits.Add(unit);
+                    }
+                    readerpu.Close();
+                }
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                con.Close();
+            }
+            return purchases;
+        }
     }
 }

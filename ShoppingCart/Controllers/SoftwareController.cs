@@ -5,6 +5,11 @@ namespace ShoppingCart.Controllers
 {
     public class SoftwareController : Controller
     {
+        private readonly DbContext db;
+        public SoftwareController(DbContext db)
+        {
+            this.db = db;
+        }
         public IActionResult Index()
         {
             Data data = new Data();
@@ -16,9 +21,11 @@ namespace ShoppingCart.Controllers
             return View();
         }
 
+        [HttpPost]
         public IActionResult Search(string searchString)
         {
-            return View();
+            var result = db.Search(searchString);
+            return Json(new { res = result });
         }
     }
 }
