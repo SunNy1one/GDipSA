@@ -9,7 +9,7 @@ namespace ShoppingCart.Controllers
             return View();
         }
 
-        public IActionResult ShoppingCart()
+        public IActionResult ViewCart()
         {
             return View();
         }
