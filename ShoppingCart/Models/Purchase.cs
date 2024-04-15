@@ -1,5 +1,12 @@
 ﻿namespace ShoppingCart.Models
 {
+    public class PurchaseCart
+    {
+        public string? userId { get; set; }
+
+        public List<string> inCartSoftware = new List<string>();
+
+    }
     public class Purchase
     {
         public string purchaseId { get; set; }

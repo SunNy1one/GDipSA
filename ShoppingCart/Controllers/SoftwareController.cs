@@ -15,5 +15,10 @@ namespace ShoppingCart.Controllers
         {
             return View();
         }
+
+        public IActionResult Search(string searchString)
+        {
+            return View();
+        }
     }
 }
