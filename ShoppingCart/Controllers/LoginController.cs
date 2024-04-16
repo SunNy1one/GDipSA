@@ -18,14 +18,15 @@ namespace ShoppingCart.Controllers
 
         public IActionResult Login(string username, string password)
         {
-            if (db.Login(username, password) == LoginStatus.Success)
+            string? userId = db.Login(username, password);
+            if (userId != null)
             {
-                return StartSession(username);
+                return StartSession(username, userId);
             }
             return View("Index", new LoginResult("Log in failed."));
         }
 
-        public IActionResult StartSession(string username)
+        public IActionResult StartSession(string username, string userId)
         {
             string sessionId = System.Guid.NewGuid().ToString();
             CookieOptions options = new CookieOptions();
@@ -33,6 +34,7 @@ namespace ShoppingCart.Controllers
             Response.Cookies.Append("SessionId", sessionId, options);
             ISession session = HttpContext.Session;
             session.SetString("username", username);
+            session.SetString("userId", userId);
             return RedirectToAction("Index", "Software");
         }
 

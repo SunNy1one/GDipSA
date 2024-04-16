@@ -13,6 +13,7 @@ namespace ShoppingCart
             builder.Services.AddControllersWithViews();
             builder.Services.AddSession();
             builder.Services.AddSingleton<DbContext>();
+            builder.Services.AddHttpContextAccessor();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -27,7 +28,7 @@ namespace ShoppingCart
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            
             app.UseAuthorization();
             app.UseSession();
             app.UseMiddleware<LoginStatusCheck>();

@@ -2,6 +2,6 @@
 {
     public interface IDbContext
     {
-        public LoginStatus Login(string username, string passhash);
+        public string? Login(string username, string passhash);
     }
 }

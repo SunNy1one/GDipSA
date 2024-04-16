@@ -11,7 +11,7 @@ namespace ShoppingCart.Models
             con = new MySqlConnection("server=localhost;uid=root;pwd=Password123!;database=shoppingcart");
         }
         // Auth Ops
-        public LoginStatus Login(string username, string passhash)
+        public string? Login(string username, string passhash)
         {
             try
             {
@@ -25,27 +25,27 @@ namespace ShoppingCart.Models
                 {
                     string userId = (string)reader["UserId"];
                     reader.Close();
-                    sql = @"SELECT 1 From User WHERE UserID = @userId and HashedPass = @passhash";
+                    sql = @"SELECT UserId From User WHERE UserID = @userId and HashedPass = @passhash";
                     cmd = new MySqlCommand(sql, con);
                     cmd.Parameters.Add(new MySqlParameter("userId", userId));
                     cmd.Parameters.Add(new MySqlParameter("passhash", passhash));
                     reader = cmd.ExecuteReader();
                     if(reader.Read())
                     {
-                        return LoginStatus.Success;
+                        return (string)reader["UserId"];
                     } else
                     {
-                        return LoginStatus.Failed;
+                        return null;
                     }
                 } else
                 {
-                    return LoginStatus.Failed;
+                    return null;
                 }
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
                 Console.WriteLine(ex.Message);
-                return LoginStatus.Failed;
+                return null;
             }
             finally
             {
@@ -116,7 +116,7 @@ namespace ShoppingCart.Models
                     readerpu = cmdpu.ExecuteReader();
                     while(readerpu.Read())
                     {
-                        Purchase.PurchaseUnit unit = new Purchase.PurchaseUnit(purchase.purchaseId, (string)reader["SoftwareId"], (string)reader["ActivationCode"]);
+                        Purchase.PurchaseUnit unit = new Purchase.PurchaseUnit(purchase.purchaseId, (string)readerpu["SoftwareId"], (string)readerpu["ActivationCode"]);
                         purchase.purchaseUnits.Add(unit);
                     }
                     readerpu.Close();
