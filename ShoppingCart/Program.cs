@@ -1,4 +1,5 @@
 using ShoppingCart.Models;
+using ShoppingCart.Models.EF;
 using ShoppingCart.Models.Middleware;
 
 namespace ShoppingCart
@@ -12,7 +13,8 @@ namespace ShoppingCart
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddSession();
-            builder.Services.AddSingleton<DbContext>();
+            builder.Services.AddSingleton<DatabaseContext>();
+            builder.Services.AddDbContext<MyDbContext>();
             builder.Services.AddHttpContextAccessor();
             var app = builder.Build();
 
@@ -26,9 +28,7 @@ namespace ShoppingCart
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-            
             app.UseAuthorization();
             app.UseSession();
             app.UseMiddleware<LoginStatusCheck>();

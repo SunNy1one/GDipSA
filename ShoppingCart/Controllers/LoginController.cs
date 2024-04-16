@@ -1,13 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ShoppingCart.Models;
+using ShoppingCart.Models.EF;
 
 namespace ShoppingCart.Controllers
 {
     public class LoginController : Controller
     {
-        private readonly DbContext db;
-        public LoginController(DbContext db) {
+        private readonly DatabaseContext db;
+        private readonly MyDbContext mydb;
+        
+        public LoginController(DatabaseContext db, MyDbContext mydb) {
             this.db = db;
+            this.mydb = mydb;
+            
         }
         public IActionResult Index()
         {

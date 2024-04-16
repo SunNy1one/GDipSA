@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ShoppingCart.Models;
+using ShoppingCart.Models.EF;
 using System.Diagnostics;
 
 namespace ShoppingCart.Controllers
@@ -8,9 +9,11 @@ namespace ShoppingCart.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly MyDbContext db;
+        public HomeController(ILogger<HomeController> logger, MyDbContext db)
         {
             _logger = logger;
+            this.db = db;
         }
 
         public IActionResult Index()

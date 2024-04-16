@@ -5,8 +5,8 @@ namespace ShoppingCart.Controllers
 {
     public class PurchaseController : Controller
     {
-        private readonly DbContext db;
-        public PurchaseController(DbContext db)
+        private readonly DatabaseContext db;
+        public PurchaseController(DatabaseContext db)
         {
             this.db = db;
         }

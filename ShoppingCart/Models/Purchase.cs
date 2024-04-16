@@ -41,10 +41,8 @@
 
         public class PurchaseUnit
         {
-            
             public string purchaseId { get; set; }
             public string softwareId { get; set; }
-
             public string activationCode { get; set; }
 
             public PurchaseUnit(string purchaseId, string softwareId, string activationCode) 

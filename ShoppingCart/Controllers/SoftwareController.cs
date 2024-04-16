@@ -5,15 +5,15 @@ namespace ShoppingCart.Controllers
 {
     public class SoftwareController : Controller
     {
-        private readonly DbContext db;
-        public SoftwareController(DbContext db)
+        private readonly DatabaseContext db;
+        public SoftwareController(DatabaseContext db)
         {
             this.db = db;
         }
         public IActionResult Index()
         {
-            Data data = new Data();
-            return View(data.softwares);
+            
+            return View();
         }
 
         public IActionResult Reviews()

@@ -3,10 +3,10 @@ using MySqlX.XDevAPI.Common;
 
 namespace ShoppingCart.Models
 {
-    public class DbContext : IDbContext
+    public class DatabaseContext : IDbContext
     {
         MySqlConnection con {  get; set; }
-        public DbContext() 
+        public DatabaseContext() 
         {
             con = new MySqlConnection("server=localhost;uid=root;pwd=Password123!;database=shoppingcart");
         }

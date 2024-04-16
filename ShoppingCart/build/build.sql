@@ -29,7 +29,7 @@
 -- INSERT INTO Software (SoftwareID, SoftwareName, Descr, Price, ImageURL) VALUES ("2", "Paypal", "E-Payment tools", 29.0, "/images/paypal.jpg");
 -- INSERT INTO Software (SoftwareID, SoftwareName, Descr, Price, ImageURL) VALUES ("3", "ML", "Build machine learning models", 49.0, "/images/ml.jpg");
 -- INSERT INTO Software (SoftwareID, SoftwareName, Descr, Price, ImageURL) VALUES ("4", "Analytics", "Data processing ", 40.0, "/images/analytics.jpg");
--- INSERT INTO Software (SoftwareID, SoftwareName, Descr, Price, ImageURL) VALUES ("5", "DatRecorder", "Tools for recording data", 69.0, "/images/logger.jpg");
+-- INSERT INTO Software (SoftwareID, SoftwareName, Descr, Price, ImageURL) VALUES ("5", "DatRecorder", "Tools for recording data", 69.0, "/images/recorder.jpg");
 -- INSERT INTO Software (SoftwareID, SoftwareName, Descr, Price, ImageURL) VALUES ("6", "Numerics", "Numerical processing tools", 99.0, "/images/numerics.jpg");
 -- INSERT INTO Software (SoftwareID, SoftwareName, Descr, Price, ImageURL) VALUES ("7", "Recommender", "Show what other softwares users buy when they buy some software", 79.0, "/images/recoomender.jpg");
 -- INSERT INTO Software (SoftwareID, SoftwareName, Descr, Price, ImageURL) VALUES ("8", "Statistics Compiler", "Build statistical models", 99.0, "/images/statcompiler.jpg");
