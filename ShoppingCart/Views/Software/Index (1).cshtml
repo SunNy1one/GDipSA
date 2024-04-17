@@ -1,0 +1,52 @@
+﻿
+@model List<Software>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Results</title>
+    
+
+    <link rel="stylesheet" type="text/css" href="~/css/site.css">
+</head>
+<body>
+
+    <!-- Search Bar -->
+    <form asp-controller="Software" asp-action="Index" method="get">
+        <input type="text" name="searchString" placeholder="Search..." />
+        <button type="submit">Search</button>
+    </form>
+    <div class="cart-container">
+        
+        <a href="@(Url.Action("ViewCart", "Purchase"))" class="cart-container">
+            <img src="images/cart_icon.jpg" alt="Cart" class="cart-icon" />
+            <span>@ViewBag.CartCount</span>
+        </a>
+    </div>
+
+    
+
+
+    <div class="grid-container"> 
+        @foreach (var software in Model)
+        {
+            <div class="grid-item"> 
+                <h2>@software.softwareName</h2>
+                <img src="@Url.Content(software.imageUrl)" alt="@software.softwareName" />
+                <p>@software.description</p>
+                <p>Price: @software.price</p>
+                <form asp-controller="Purchase" asp-action="AddToCart" method="post">
+                    <input type="hidden" name="softwareId" value="@software.softwareId" />
+                    <button type="submit">Add to Cart</button>
+
+
+                </form>
+
+            </div>
+        }
+    </div>
+
+   
+
+</body>
+</html>

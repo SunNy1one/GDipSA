@@ -1,5 +1,10 @@
 ﻿@model List<Software>
 @{
+    List<Software>? softwareToShow = Model;
+    if(ViewData["search-result"] != null)
+    {
+        softwareToShow = (List<Software>?)ViewData["search-result"];
+    }
 }
 <style>
     .software-card {
@@ -8,33 +13,46 @@
         padding: 10px;
     }
 </style>
-<div class="col-sm-3 m-1 software-card">
+<form action="/Software/Search" method="POST">
+    <input type="search" id="search-bar" name="searchString" />
+    <input type="submit" value="Search" />
+</form>
+@{
+    for (int i = 0; i < softwareToShow?.Count; i++)
+    {
+        <div class="col-sm-3 m-1 software-card">
+            <img src="@softwareToShow[i].imageUrl" style="width:250px" />
+            <br />
+            <b>@softwareToShow[i].softwareName</b>
+            <br />
+            <p>@softwareToShow[i].description</p>
+        </div>
+    }
+}
+@* <div class="col-sm-3 m-1 software-card">
     <img src="~/images/chart.jpg" style="width:250px"/>
     <br />
     <b>@Model.First().softwareName</b>
     <br />
     <p>@Model.First().description</p>
-</div>
-<form action="/Software/Search" method="POST">
-    <input type="search" id="search-bar" name="searchString" />
-    <input type="submit" value="Search"/>
-</form>
+</div> *@
+
 
 <script>
-    const searchEl = document.getElementById("search-bar");
-    function searchSoftware() {
-        const searchString = searchEl.va;
-        console.log(`search string: ${searchString}`);
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "/Software/Search?searchString=");
-        xhr.setRequestHeader("Content-Type", "application/text");
-        xhr.onreadystatechange = function(){
-            if (this.readyState == XMLHttpRequest.DONE) {
-                if (this.status == 200) {
-                    let data = JSON.parse(this.responseText);
-                }
-            }
-        }
-        xhr.send();
-    }
+    // const searchEl = document.getElementById("search-bar");
+    // function searchSoftware() {
+    //     const searchString = searchEl.va;
+    //     console.log(`search string: ${searchString}`);
+    //     var xhr = new XMLHttpRequest();
+    //     xhr.open("POST", "/Software/Search?searchString=");
+    //     xhr.setRequestHeader("Content-Type", "application/text");
+    //     xhr.onreadystatechange = function(){
+    //         if (this.readyState == XMLHttpRequest.DONE) {
+    //             if (this.status == 200) {
+    //                 let data = JSON.parse(this.responseText);
+    //             }
+    //         }
+    //     }
+    //     xhr.send();
+    // }
 </script>

@@ -23,29 +23,34 @@ namespace ShoppingCart.Controllers
 
         public IActionResult Login(string username, string password)
         {
-            string? userId = db.Login(username, password);
-            if (userId != null)
+            User? user = db.Login(username, password);
+            if (user != null)
             {
-                return StartSession(username, userId);
+                return StartSession(user);
             }
             return View("Index", new LoginResult("Log in failed."));
         }
 
-        public IActionResult StartSession(string username, string userId)
+        public IActionResult StartSession(User user)
         {
             string sessionId = System.Guid.NewGuid().ToString();
             CookieOptions options = new CookieOptions();
             options.Expires = DateTime.Now.AddMinutes(10);
             Response.Cookies.Append("SessionId", sessionId, options);
             ISession session = HttpContext.Session;
-            session.SetString("username", username);
-            session.SetString("userId", userId);
-            return RedirectToAction("Index", "Software");
+            session.SetString("username", user.username);
+            session.SetString("userId", user.userId ?? "");
+            return RedirectToAction("Index", "Software", user);
         }
 
         public IActionResult Logout()
         {
             Response.Cookies.Delete("SessionId");
+            ISession session = HttpContext.Session;
+            session.Remove("username");
+            session.Remove("userId");
+            ViewData["username"] = null;
+            ViewData["userId"] = null;
             return RedirectToAction("Index");
         }
     }

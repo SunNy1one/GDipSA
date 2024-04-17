@@ -11,7 +11,7 @@ namespace ShoppingCart.Models
             con = new MySqlConnection("server=localhost;uid=root;pwd=Password123!;database=shoppingcart");
         }
         // Auth Ops
-        public string? Login(string username, string passhash)
+        public User? Login(string username, string passhash)
         {
             try
             {
@@ -25,14 +25,14 @@ namespace ShoppingCart.Models
                 {
                     string userId = (string)reader["UserId"];
                     reader.Close();
-                    sql = @"SELECT UserId From User WHERE UserID = @userId and HashedPass = @passhash";
+                    sql = @"SELECT * From User WHERE UserID = @userId and HashedPass = @passhash";
                     cmd = new MySqlCommand(sql, con);
                     cmd.Parameters.Add(new MySqlParameter("userId", userId));
                     cmd.Parameters.Add(new MySqlParameter("passhash", passhash));
                     reader = cmd.ExecuteReader();
                     if(reader.Read())
                     {
-                        return (string)reader["UserId"];
+                        return new User((string)reader["UserID"], (string)reader["Username"], (string)reader["FirstName"], (string)reader["LastName"]);
                     } else
                     {
                         return null;

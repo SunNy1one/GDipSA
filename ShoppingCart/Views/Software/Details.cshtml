@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html>
+
+    <title>@Model.softwareName Details</title>
+    <link rel="stylesheet" type="text/css" href="~/css/site.css"> // link for css file 
+<body>
+
+    <div class="software-details">
+        <h1>@Model.softwareName</h1>
+        <div class="software-info">
+            <img src="@Url.Content(Model.imageUrl)" alt="@Model.softwareName" class="software-image" />
+            <div class="software-description">
+                <p>@Model.description</p>
+                <p>Price: @Model.price</p>
+            </div>
+        </div>
+        <form id="addToCartForm" asp-controller="Purchase" asp-action="AddToCart" method="post">
+            <input type="hidden" name="softwareId" value="@Model.softwareId" />
+            <button type="submit">Add to Cart</button>
+        </form>
+    </div>
+
+   
+    <a asp-controller="Software" asp-action="Index">Back to Gallery</a>// link to goback to gallery page , can be used in other pages also
+
+    <script src="~/js/script.js" asp-append-version="true"></script>
+</body>
+</html>

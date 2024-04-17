@@ -13,7 +13,12 @@
             this.firstName = firstName;
             this.lastName = lastName;
         }
-        
+        public User()
+        {
+            this.username = "";
+            this.firstName = "";
+            this.lastName = "";
+        }
 
     }
 

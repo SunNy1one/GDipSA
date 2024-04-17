@@ -20,9 +20,9 @@ namespace ShoppingCart.Controllers
             return View();
         }
 
-        public IActionResult ViewCart()
+        public IActionResult ViewCart(PurchaseCart cart)
         {
-            return View();
+            return View(cart);
         }
 
         public IActionResult PastPurchase()

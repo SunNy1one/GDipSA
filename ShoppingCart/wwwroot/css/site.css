@@ -1,18 +1,40 @@
-html {
-  font-size: 14px;
+.cart-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+/* Cart Icon */
+.cart-icon {
+    width: 50px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+    margin-right: 5px;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+/* Grid Container */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    grid-auto-rows: auto; /* Automatically size rows */
+    gap: 20px; /* Gap between grid items */
+    width: 60%; /* Set the width of the container */
+    margin: 0 auto; /* Center the container horizontally */
 }
 
-body {
-  margin-bottom: 60px;
+
+/* Grid Item */
+.grid-item {
+    border: 1px solid #ccc; /* Border for each grid item */
+    padding: 20px; /* Padding inside each grid item */
+    text-align: center; /* Center align content */
 }
+
+
+
+    /* Image styling */
+    .grid-item img {
+        max-width: 100%; /* Ensure images don't exceed container width */
+        height: auto; /* Maintain aspect ratio */
+    }

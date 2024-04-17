@@ -32,7 +32,7 @@
                         @if (HttpContextAccessor.HttpContext?.Session.GetString("username") != null)
                         {
                             <li class="nav-item">
-                                <span class="text-dark align-items-center" asp-area="" id="usernameTag">@HttpContextAccessor.HttpContext?.Session.GetString("username")</span>
+                                <span class="text-dark nav-link" asp-area="" id="usernameTag">Welcome @ViewData["username"]!</span>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" href="/Purchase/PastPurchase">My Purchases</a>

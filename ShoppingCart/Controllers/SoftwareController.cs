@@ -10,10 +10,11 @@ namespace ShoppingCart.Controllers
         {
             this.db = db;
         }
-        public IActionResult Index()
+        public IActionResult Index(User user)
         {
-            
-            return View();
+            ViewData["username"] = user.username;
+            ViewData["userId"] = user.userId;
+            return View(db.GetAllSoftware());
         }
 
         public IActionResult Reviews()
@@ -25,7 +26,22 @@ namespace ShoppingCart.Controllers
         public IActionResult Search(string searchString)
         {
             var result = db.Search(searchString);
-            return Json(new { res = result });
+            ViewData["search-result"] = result;
+            return View("Index");
+        }
+
+        [HttpPost]
+        public IActionResult AddToCart(int softwareId)
+        {
+            int cartCount = GetCartCount();
+            cartCount++;
+            HttpContext.Session.SetInt32("CartCount", cartCount);
+            return RedirectToAction("ViewCart", "Purchase");
+        }
+
+        private int GetCartCount()
+        {
+            return HttpContext.Session.GetInt32("CartCount") ?? 0;
         }
     }
 }
