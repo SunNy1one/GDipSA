@@ -11,17 +11,19 @@
 <body>
 
     <!-- Search Bar -->
-    <form asp-controller="Software" asp-action="Index" method="get">
-        <input type="text" name="searchString" placeholder="Search..." />
-        <button type="submit">Search</button>
-    </form>
-    <div class="cart-container">
+    <div class="search-bar-container">
+        <form asp-controller="Software" asp-action="search" method="POST">
+            <input type="text" name="searchString" placeholder="Search..." />
+        </form>
+        <div class="cart-container">
 
-        <a href="@(Url.Action("ViewCart", "Purchase"))" class="cart-container">
-            <img src="images/cart.jpg" alt="Cart" class="cart-icon" />
-            <span>@ViewBag.CartCount</span>
-        </a>
+            <button onclick="goToViewCart()" class="cart-container">
+                <img src="images/cart.jpg" alt="Cart" class="cart-icon" />
+                <span class="cart-count">@ViewBag.CartCount</span>
+            </button>
+        </div>
     </div>
+    
 
 
 
@@ -34,14 +36,31 @@
                 <img src="@Url.Content(software.imageUrl)" alt="@software.softwareName" />
                 <p>@software.description</p>
                 <p>Price: @software.price</p>
-                <form asp-controller="Purchase" asp-action="AddToCart" method="post">
-                    <input type="hidden" name="softwareId" value="@software.softwareId" />
-                    <button type="submit">Add to Cart</button>
-                </form>
+                <button type="submit" onclick="addToCart(@software.softwareId)">Add to Cart</button>
 
             </div>
         }
     </div>
+    <script>
+        var softwareToPurchase = [];
+        function addToCart(softwareId){
+            softwareToPurchase.push(softwareId);
+        }
+
+        function goToViewCart() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/Purchase/ViewCart");
+            xhr.setRequestHeader("content-type", "application/json; charset=utf-8;");
+            xhr.onreadystatechange = function () {
+                if (this.readyState == XMLHttpRequest.DONE) {
+                    if(this.status == 200){
+
+                    }
+                }
+            }
+            xhr.send(JSON.stringify(softwareToPurchase));
+        }
+    </script>
 
 
 

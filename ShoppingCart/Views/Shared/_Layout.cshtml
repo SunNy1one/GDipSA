@@ -1,12 +1,16 @@
 ﻿@using Microsoft.AspNetCore.Http
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
+@{
+    ViewData["Title"] = "Software Zone";
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ShoppingCart</title>
+    <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ShoppingCart.styles.css" asp-append-version="true" />
@@ -39,6 +43,12 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" href="/login/logout">Log out</a>
+                            </li>
+                        }
+                        else if (HttpContextAccessor.HttpContext?.Request.Path != "/login/")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="/Login/">Log in</a>
                             </li>
                         }
                     </ul>
@@ -98,7 +108,6 @@
                 }
             } else {
                 const usernameTag = document.getElementById("usernameTag");
-
                 logoutDiv.style.display = "block";
             }
 

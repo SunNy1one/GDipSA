@@ -1,5 +1,10 @@
+.search-bar-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 .cart-container {
-    
     top: 20px;
     right: 20px;
     display: flex;

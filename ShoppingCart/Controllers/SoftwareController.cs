@@ -13,7 +13,6 @@ namespace ShoppingCart.Controllers
         public IActionResult Index(User user)
         {
             ViewData["username"] = user.username;
-            ViewData["userId"] = user.userId;
             return View(db.GetAllSoftware());
         }
 
@@ -27,16 +26,19 @@ namespace ShoppingCart.Controllers
         {
             var result = db.Search(searchString);
             ViewData["search-result"] = result;
-            return View("Index");
+            return View("Index", result);
         }
 
+        List<string> softwareInCart = new List<string>();
+
         [HttpPost]
-        public IActionResult AddToCart(int softwareId)
+        public IActionResult AddToCart(string softwareId)
         {
+            softwareInCart.Add(softwareId.ToString());
             int cartCount = GetCartCount();
             cartCount++;
-            HttpContext.Session.SetInt32("CartCount", cartCount);
-            return RedirectToAction("ViewCart", "Purchase");
+            HttpContext.Session.SetInt32("CartCount", softwareInCart.Count);
+            return View("Index", db.GetAllSoftware());
         }
 
         private int GetCartCount()

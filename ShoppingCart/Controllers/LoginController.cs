@@ -7,12 +7,9 @@ namespace ShoppingCart.Controllers
     public class LoginController : Controller
     {
         private readonly DatabaseContext db;
-        private readonly MyDbContext mydb;
         
-        public LoginController(DatabaseContext db, MyDbContext mydb) {
+        public LoginController(DatabaseContext db) {
             this.db = db;
-            this.mydb = mydb;
-            
         }
         public IActionResult Index()
         {
@@ -50,7 +47,6 @@ namespace ShoppingCart.Controllers
             session.Remove("username");
             session.Remove("userId");
             ViewData["username"] = null;
-            ViewData["userId"] = null;
             return RedirectToAction("Index");
         }
     }

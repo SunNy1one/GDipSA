@@ -89,20 +89,20 @@ namespace ShoppingCart.Models
 
         // User Ops
 
-        public List<Purchase> GetPastPurchase(string userId)
+        public List<Purchase> GetPastPurchase(string username)
         {
             List<Purchase> purchases = new List<Purchase>();
             List<Purchase.PurchaseUnit> units = new List<Purchase.PurchaseUnit>();
             try
             {
                 con.Open();
-                string sql = @"SELECT PurchaseId, DateOfPurchase FROM Purchase WHERE UserId = @userid";
+                string sql = @"SELECT PurchaseId, DateOfPurchase FROM Purchase WHERE Username = @username";
                 MySqlCommand cmd = new MySqlCommand(sql, con);
-                cmd.Parameters.Add(new MySqlParameter("userid", userId));
+                cmd.Parameters.Add(new MySqlParameter("username", username));
                 MySqlDataReader reader = cmd.ExecuteReader();
                 while(reader.Read())
                 {
-                    Purchase purchase = new Purchase((string)reader["PurchaseId"], userId, (DateTime)reader["DateOfPurchase"], new List<Purchase.PurchaseUnit>());
+                    Purchase purchase = new Purchase((string)reader["PurchaseId"], username, (DateTime)reader["DateOfPurchase"], new List<Purchase.PurchaseUnit>());
                     purchases.Add(purchase);
                 }
                 reader.Close();

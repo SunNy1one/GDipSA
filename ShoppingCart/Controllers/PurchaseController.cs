@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ShoppingCart.Models;
+using System.Diagnostics;
 
 namespace ShoppingCart.Controllers
 {
@@ -15,14 +16,12 @@ namespace ShoppingCart.Controllers
             return View();
         }
 
-        public IActionResult AddToCart() 
-        {
-            return View();
-        }
+        
 
-        public IActionResult ViewCart(PurchaseCart cart)
+        public IActionResult ViewCart(List<string> softwareIds)
         {
-            return View(cart);
+            Debug.WriteLine(softwareIds);
+            return View();
         }
 
         public IActionResult PastPurchase()
