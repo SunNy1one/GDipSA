@@ -1,5 +1,5 @@
 .cart-container {
-    position: fixed;
+    
     top: 20px;
     right: 20px;
     display: flex;
@@ -8,7 +8,7 @@
 
 /* Cart Icon */
 .cart-icon {
-    width: 50px; /* Adjust the width as needed */
+    width: 32px; /* Adjust the width as needed */
     height: auto; /* Maintain aspect ratio */
     margin-right: 5px;
 }
