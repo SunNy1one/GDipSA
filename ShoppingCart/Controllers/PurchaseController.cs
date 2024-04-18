@@ -17,25 +17,6 @@ namespace ShoppingCart.Controllers
         }
 
 
-        [HttpPost]
-        public IActionResult ViewCart(List<string> softwaresToBuy)
-        {
-            Debug.WriteLine(softwaresToBuy);
-            return Json(new {
-                softwares = softwaresToBuy
-            });
-        }
-
-        public IActionResult PastPurchase()
-        {
-            ISession session = HttpContext.Session;
-            string? username = session.GetString("username");
-            if(username != null)
-            {
-                var purchases = db.GetPastPurchase(username);
-                return View(purchases);
-            }
-            return View();
-        }
+        
     }
 }

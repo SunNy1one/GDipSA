@@ -1,0 +1,76 @@
+﻿@model List<ShoppingCart.Models.PurchaseDTO>
+
+<style type="text/css">
+    .lb {
+        width: 200px;
+    }
+</style>
+
+<h2>Purchase History</h2>
+
+
+<div class="container mt-4">
+
+    @foreach (PurchaseDTO item in Model)
+    {
+        <div class="row" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;padding:15px;    border-radius: 10px;">
+            <div class="col-md-4">
+                <div class="card">
+                    <div style="height:200px; overflow:hidden; display:flex; justify-content:center; align-items:center;">
+                        @*<img src="https://imgservice.suning.cn/uimg1/b2c/image/5qIOg5qsYv-ydozafUnXpQ.jpg_800w_800h_4e" class="card-img-top" alt="Product Image">*@
+                        <img src="@item.software.imageUrl" class="card-img-top" alt="Product Image">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title" style="text-align:center;">@item.software.softwareName</h5>
+                        <hr />
+                        <p class="card-text">@item.software.description</p>
+                        <div>
+                            <a style="display:block;" href="#" class="btn btn-primary btn-block">download</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" style="padding-top: 50px;">
+                <!-- Right side: Text information -->
+                <div class="row mt-2">
+                    <div class="col">
+                        <label class="lb" for="purchasedOn">Purchased On:</label>
+                        <label id="purchasedOn">@item.lastdateOfPurchase</label>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col">
+                        <label class="lb" for="quantity">Quantity:</label>
+                        <label id="quantity">@item.activationcodeList.Count</label>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col">
+                        <label class="lb" for="activationCode">Activation Code:</label>
+
+                        @if (@item.activationcodeList.Count <= 1)
+                        {
+                            <label id="activationCode">@item.activationcodeList.FirstOrDefault()</label>
+                        }
+                        else if (@item.activationcodeList.Count > 1)
+                        {
+                            <div style="display:inline-block">
+                                <select class="form-control">
+                                    @foreach (string t_item in item.activationcodeList)
+                                    {
+                                        <option value="@t_item">@t_item</option>
+                                    }
+                                </select>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    }
+</div>
+
+

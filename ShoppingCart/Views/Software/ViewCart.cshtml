@@ -1,0 +1,72 @@
+﻿@model PurchaseCart
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Page Title</title>
+    <link rel="stylesheet" href="~/css/viewcart.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/continue-shopping">Continue Shopping</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </nav>
+        <div class="total">
+            Total: $0.00
+        </div>
+    </header>
+    <div class="grid-container">
+        @foreach (var sp in Model.softwareToPurchase())
+        {
+            <div class="grid-item">
+                <h2>@sp.softwareName</h2>
+                <img src="@sp.imageUrl" alt="@sp.softwareName" />
+                <p>@sp.description</p>
+                <div class="price-and-quantity">
+                    <p>Price: $@sp.price</p>
+                    <div class="quantity-selector">
+                        <button class="decrease" data-item-id="soft@sp.softwareId">-</button>
+                        <span class="quantity">@Model.GetSoftwareCount(sp.softwareId)</span>
+                        <button class="increase" data-item-id="soft@sp.softwareId">+</button>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+    <script>
+        document.querySelectorAll('.increase').forEach(button => {
+            button.addEventListener('click', function () {
+                const itemId = this.getAttribute('data-item-id');
+                const quantityElement = document.querySelector(`.quantity[data-item-id="${itemId}"]`);
+                let quantity = parseInt(quantityElement.textContent);
+                quantity++;
+                quantityElement.textContent = quantity;
+            });
+        });
+
+        document.querySelectorAll('.decrease').forEach(button => {
+            button.addEventListener('click', function () {
+                const itemId = this.getAttribute('data-item-id');
+                const quantityElement = document.querySelector(`.quantity[data-item-id="${itemId}"]`);
+                let quantity = parseInt(quantityElement.textContent);
+                if (quantity > 1) {
+                    quantity--;
+                    quantityElement.textContent = quantity;
+                }
+            });
+        });
+
+    </script>
+    
+
+    
+</body>
+</html>
+
+

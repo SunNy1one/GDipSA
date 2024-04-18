@@ -17,10 +17,10 @@
         <form asp-controller="Software" asp-action="search" method="POST">
             <input type="text" name="searchString" placeholder="Search..." />
         </form>
-        <button class="cart-container" onclick="goToViewCart()">
-            <img src="/images/cart.jpg" alt="Cart" class="cart-icon" />
-            <span class="cart-count" id="cart-count-tag"></span>
-        </button>
+        <div class="cart-container">
+            <button class="cart-container" type="submit" onclick="goToViewCart()" /><img src="/images/cart.jpg" alt="Cart" class="cart-icon" />
+            <div class="cart-count" id="cart-count-tag"></div>
+        </div>
     </div>
     
 
@@ -44,31 +44,36 @@
         const cartCountTag = document.getElementById("cart-count-tag");
         var softwareToPurchase = [];
         function addToCart(softwareId){
-            console.dir(softwareToPurchase);
             softwareToPurchase.push(softwareId);
-            cartCountTag.innerHTML = `${softwareToPurchase.length}`;
+            cartCountTag.innerHTML = softwareToPurchase.length;
+           
+            if (Number.parseInt(softwareToPurchase.length) > 0) {
+                cartCountTag.classList.add("border-1");
+            } else {
+                cartCountTag.classList.remove("border-1");
+            }
         }
 
         function goToViewCart() {
             var softwareToPurchaseString = "";
             for (var i = 0; i < softwareToPurchase.length; i++) 
             {
-                softwareToPurchaseString = softwareToPurchaseString + `&softwaresToBuy=${softwareToPurchase[i]}`;
+                softwareToPurchaseString = softwareToPurchaseString + `,${softwareToPurchase[i]}`;
             }
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "/Purchase/ViewCart");
-            console.log("parsing http request");
-            xhr.setRequestHeader("content-type", "application/json");
-            xhr.onreadystatechange = function () {
-                if (this.readyState = XMLHttpRequest.DONE && this.status == 200) 
-                {
-                    let data = JSON.parse(this.responseText);
-                    console.log(data);
-                }
-            }
-            xhr.send(JSON.stringify({
-                "softwaresToBuy": softwareToPurchase
-            }));
+            window.location.href = "/software/ViewCart?softwareToPurchase=" + softwareToPurchaseString;
+            // var xhr = new XMLHttpRequest();
+            // xhr.open("POST", "/Software/ViewCart?softwareToPurchase="+softwareToPurchaseString);
+            
+            // xhr.setRequestHeader("content-type", "application/json");
+            // xhr.onreadystatechange = function () {
+            //     if (this.readyState = XMLHttpRequest.DONE && this.status == 200) 
+            //     {
+            //         let data = JSON.parse(this.responseText);
+            //         console.log(data);
+            //         fetch("")
+            //     }
+            // }
+            // xhr.send();
         }
     </script>
 

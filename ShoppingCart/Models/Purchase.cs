@@ -2,9 +2,29 @@
 {
     public class PurchaseCart
     {
-        public string? userId { get; set; }
+        public PurchaseCart(string username)
+        {
+            this.username = username;
+        }
 
-        public List<string> inCartSoftware = new List<string>();
+        public PurchaseCart()
+        {
+
+        }
+        public string? username { get; set; }
+
+        public List<Software> softwareList = new List<Software>();
+
+        public int GetSoftwareCount(string softwareId)
+        {
+            return softwareList.Where((s) => s.softwareId == softwareId).Count();
+        }
+
+        public ISet<Software> softwareToPurchase()
+        {
+            ISet<string> set = softwareList.Select((s) => s.softwareId).ToHashSet<string>();
+            return softwareList.Where((s) => set.Contains(s.softwareId)).ToHashSet();
+        }
 
     }
     public class Purchase
@@ -13,7 +33,7 @@
 
         public List<PurchaseUnit> purchaseUnits = new List<PurchaseUnit>();
         public string userId { get; set; }
-        public DateTime dateOfPurchase {  get; set; }
+        public DateTime dateOfPurchase { get; set; }
 
         public PurchaseStatus status { get; set; } = PurchaseStatus.Pending;
 
@@ -25,27 +45,33 @@
             this.purchaseUnits = units;
         }
 
+        public void AddUnit(string softwareId)
+        {
+            purchaseUnits.Add(new PurchaseUnit(this.purchaseId, softwareId, buildActivationCode()));
+        }
+
         public void CompletePurchase()
         {
             status = PurchaseStatus.Completed;
         }
 
-        public string buildActivationCode() { 
+        public string buildActivationCode()
+        {
             return Guid.NewGuid().ToString();
         }
 
         public class PurchaseUnit
         {
             public string purchaseId { get; set; }
-            public Software software { get; set; }
+            public string softwareId { get; set; }
             public string activationCode { get; set; }
 
-            public PurchaseUnit(string purchaseId, Software software, string activationCode) 
+            public PurchaseUnit(string purchaseId, string softwareId, string activationCode)
             {
                 this.purchaseId = purchaseId;
-                this.software = software;
+                this.softwareId = softwareId;
                 this.activationCode = activationCode;
-            } 
+            }
         }
     }
 
@@ -53,4 +79,20 @@
     {
         Pending, Canceled, Completed
     }
+
+
+
+
+
+    public class PurchaseDTO
+    {
+        public string softwareid { get; set; }
+        public Software software { get; set; }
+        public DateTime lastdateOfPurchase { get; set; }
+
+        public List<string> activationcodeList =new List<string>();
+
+
+    }
+
 }

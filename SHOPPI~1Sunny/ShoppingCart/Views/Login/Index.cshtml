@@ -1,0 +1,37 @@
+﻿@using ShoppingCart.Controllers;
+@model LoginResult
+
+@{
+    string result = "";
+    if(Model != null)
+    {
+        result = Model.result;
+    }
+}
+<style>
+    .input-padding{
+        padding: 6px;
+    }
+    td {
+        text-align: right;
+    }
+</style>
+<div class="text-center table-sm" style="width:300px;margin:auto;">
+    <form method="POST" action="/Login/Login" id="login-form" name="login-form">
+        <table class="p-5">
+            <tr>
+                <td>Username:</td>
+                <td class="input-padding"><input type="text" id="username-input" name="username"/></td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td class="input-padding"><input type="password" id="password-input" name="password"/></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td style="display:flex;justify-content:end;"><button type="submit" class="form-control" style="width:60px;margin-right:10px">Login</button></td>
+            </tr>
+        </table>
+        <span id="result">@result</span>
+    </form>
+</div>

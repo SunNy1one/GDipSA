@@ -116,7 +116,7 @@ namespace ShoppingCart.Models
                     readerpu = cmdpu.ExecuteReader();
                     while(readerpu.Read())
                     {
-                        Purchase.PurchaseUnit unit = new Purchase.PurchaseUnit(purchase.purchaseId, new Software((string)readerpu["SoftwareId"], (string)readerpu["SoftwareName"], (string)readerpu["Descr"], Double.Parse(((decimal)readerpu["Price"]).ToString()), (string)readerpu["ImageURL"]), (string)(string)readerpu["ActivationCode"]);
+                        Purchase.PurchaseUnit unit = new Purchase.PurchaseUnit(purchase.purchaseId, (string)readerpu["SoftwareId"], (string)readerpu["ActivationCode"]);
                         purchase.purchaseUnits.Add(unit);
                     }
                     readerpu.Close();
@@ -132,5 +132,90 @@ namespace ShoppingCart.Models
             }
             return purchases;
         }
+
+        public List<PurchaseDTO> GetPastPurchase2(string username)
+        {
+            List<PurchaseDTO> purchases = new List<PurchaseDTO>();
+
+            try
+            {
+                con.Open();
+                string sql = @"select * from purchasesoftware a 
+join software b on a.softwareid=b.softwareid 
+join purchase c on c.purchaseid=a.purchaseid
+where c.userId = (Select UserId FROM User where username = @username)";
+                MySqlCommand cmd = new MySqlCommand(sql, con);
+                cmd.Parameters.Add(new MySqlParameter("username", username));
+                MySqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+
+                    PurchaseDTO tem = purchases.Where(p => p.softwareid == (string)reader["softwareid"]).FirstOrDefault();
+
+                    if (tem != null)
+                    {
+                        tem.activationcodeList.Add((string)reader["activationcode"]);
+                        tem.lastdateOfPurchase = Convert.ToDateTime(reader["dateofpurchase"]);
+                    }
+                    else
+                    {
+                        tem = new PurchaseDTO();
+                        tem.softwareid = (string)reader["softwareid"];
+                        tem.software = new Software((string)reader["softwareid"], (string)reader["softwarename"], (string)reader["descr"], Convert.ToDouble(reader["price"]), (string)reader["imageurl"]);
+                        tem.activationcodeList.Add((string)reader["activationcode"]);
+                        tem.lastdateOfPurchase = Convert.ToDateTime(reader["dateofpurchase"]);
+                        purchases.Add(tem);
+                    }
+                }
+                reader.Close();
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                con.Close();
+            }
+            return purchases;
+        }
+
+        public List<Software> GetSoftwares(List<string> softwareStrings)
+        {
+            List<Software> softwares = new List<Software>();
+            string ss = "";
+            foreach (string s in softwareStrings)
+            {
+                ss = ss + ",'" + s + "'";
+            }
+            if(softwareStrings.Count > 0)
+            {
+                ss = ss.Substring(1);
+            }
+            
+            try
+            {
+                con.Open();
+                string sql = @"select * from software where softwareId in ("+ss+")";
+                MySqlCommand cmd = new MySqlCommand(sql, con);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    softwares.Add(new Software((string)reader["softwareId"], (string)reader["SoftwareName"], (string)reader["descr"], Double.Parse(((decimal)reader["price"]).ToString()), (string)reader["ImageUrl"]));
+                }
+                reader.Close();
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                con.Close();
+            }
+            return softwares;
+        }
     }
+
+
 }

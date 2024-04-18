@@ -30,16 +30,13 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Software" asp-action="Index">Gallery</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Software" asp-action="Reviews">Reviews</a>
-                        </li>
                         @if (HttpContextAccessor.HttpContext?.Session.GetString("username") != null)
                         {
                             <li class="nav-item">
                                 <span class="text-dark nav-link" asp-area="" id="usernameTag">Welcome @HttpContextAccessor.HttpContext?.Session.GetString("username")!</span>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" href="/Purchase/PastPurchase">My Purchases</a>
+                                <a class="nav-link text-dark" href="/Software/PastPurchase">My Purchases</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" href="/login/logout">Log out</a>

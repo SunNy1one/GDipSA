@@ -1,0 +1,38 @@
+﻿@model List<Software>
+@{
+}
+<style>
+    .software-card {
+        box-shadow: 2px 4px 2px 4px rgba(0,0,0, 0.2);
+        border-radius: 10px;
+        padding: 10px;
+    }
+</style>
+<div class="col-sm-3 m-1 software-card">
+    <img src="~/images/chart.jpg" style="width:250px"/>
+    <br />
+    
+</div>
+<form action="/Software/Search" method="POST">
+    <input type="search" id="search-bar" name="searchString" />
+    <input type="submit" value="Search"/>
+</form>
+
+<script>
+    const searchEl = document.getElementById("search-bar");
+    function searchSoftware() {
+        const searchString = searchEl.va;
+        console.log(`search string: ${searchString}`);
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/Software/Search?searchString=");
+        xhr.setRequestHeader("Content-Type", "application/text");
+        xhr.onreadystatechange = function(){
+            if (this.readyState == XMLHttpRequest.DONE) {
+                if (this.status == 200) {
+                    let data = JSON.parse(this.responseText);
+                }
+            }
+        }
+        xhr.send();
+    }
+</script>

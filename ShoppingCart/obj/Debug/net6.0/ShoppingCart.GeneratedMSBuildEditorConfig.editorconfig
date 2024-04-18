@@ -30,22 +30,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Desktop/GDipSA 58/Foundation/ASPNet/CA Assignment/ShoppingCart/ShoppingCart/Views/Purchase/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHVyY2hhc2VcSW5kZXguY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/user/Desktop/GDipSA 58/Foundation/ASPNet/CA Assignment/ShoppingCart/ShoppingCart/Views/Purchase/PastPurchase.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHVyY2hhc2VcUGFzdFB1cmNoYXNlLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/user/Desktop/GDipSA 58/Foundation/ASPNet/CA Assignment/ShoppingCart/ShoppingCart/Views/Purchase/ShoppingCart.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHVyY2hhc2VcU2hvcHBpbmdDYXJ0LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/user/Desktop/GDipSA 58/Foundation/ASPNet/CA Assignment/ShoppingCart/ShoppingCart/Views/Purchase/ViewCart.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHVyY2hhc2VcVmlld0NhcnQuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/user/Desktop/GDipSA 58/Foundation/ASPNet/CA Assignment/ShoppingCart/ShoppingCart/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -66,8 +50,32 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29mdHdhcmVcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/user/Desktop/GDipSA 58/Foundation/ASPNet/CA Assignment/ShoppingCart/ShoppingCart/Views/Software/PastPurchase(O).cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29mdHdhcmVcUGFzdFB1cmNoYXNlKE8pLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/user/Desktop/GDipSA 58/Foundation/ASPNet/CA Assignment/ShoppingCart/ShoppingCart/Views/Software/PastPurchase.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29mdHdhcmVcUGFzdFB1cmNoYXNlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/user/Desktop/GDipSA 58/Foundation/ASPNet/CA Assignment/ShoppingCart/ShoppingCart/Views/Software/Reviews.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29mdHdhcmVcUmV2aWV3cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/user/Desktop/GDipSA 58/Foundation/ASPNet/CA Assignment/ShoppingCart/ShoppingCart/Views/Software/ShoppingCart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29mdHdhcmVcU2hvcHBpbmdDYXJ0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/user/Desktop/GDipSA 58/Foundation/ASPNet/CA Assignment/ShoppingCart/ShoppingCart/Views/Software/ViewCart(2).cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29mdHdhcmVcVmlld0NhcnQoMikuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/user/Desktop/GDipSA 58/Foundation/ASPNet/CA Assignment/ShoppingCart/ShoppingCart/Views/Software/ViewCart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29mdHdhcmVcVmlld0NhcnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/user/Desktop/GDipSA 58/Foundation/ASPNet/CA Assignment/ShoppingCart/ShoppingCart/Views/Software/ViewCart_2.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29mdHdhcmVcVmlld0NhcnRfMi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/user/Desktop/GDipSA 58/Foundation/ASPNet/CA Assignment/ShoppingCart/ShoppingCart/Views/_ViewImports.cshtml]
