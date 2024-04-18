@@ -36,7 +36,7 @@
                         @if (HttpContextAccessor.HttpContext?.Session.GetString("username") != null)
                         {
                             <li class="nav-item">
-                                <span class="text-dark nav-link" asp-area="" id="usernameTag">Welcome @ViewData["username"]!</span>
+                                <span class="text-dark nav-link" asp-area="" id="usernameTag">Welcome @HttpContextAccessor.HttpContext?.Session.GetString("username")!</span>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" href="/Purchase/PastPurchase">My Purchases</a>
@@ -45,7 +45,7 @@
                                 <a class="nav-link text-dark" href="/login/logout">Log out</a>
                             </li>
                         }
-                        else if (HttpContextAccessor.HttpContext?.Request.Path != "/login/")
+                        else if ((!HttpContextAccessor.HttpContext?.Request.Path.StartsWithSegments("/login") ?? true) || (!HttpContextAccessor.HttpContext?.Request.Path.StartsWithSegments("/Login") ?? true))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" href="/Login/">Log in</a>
@@ -75,41 +75,7 @@
         window.onload = function () {
 
             // Login logic
-            if (window.location.href.includes("/login")) {
-                const loginEl = document.getElementById("login-form");
-
-                if (loginEl != null && loginEl.onsubmit == null) {
-                    //loginEl.onsubmit = function (event) {
-                    //event.preventDefault();
-                    //console.log(`Event response: ${event.responseText}`);
-                    //var xhr = new XMLHttpRequest();
-                    //xhr.open("POST", "/Login/Login");
-                    //xhr.setRequestHeader("content-type", "application/json; charset=utf-8");
-                    //xhr.onreadystatechange = function () {
-                    //    if (this.readyState == XMLHttpRequest.DONE) {
-                    //        if (this.status != 200) {
-                    //            logioresult.innerHTML = "Log in failed.";
-                    //            return;
-                    //        }
-                    //        let data = JSON.parse(this.responseText);
-                    //        console.log(`data ${data.result}`);
-                    //        logioresult.innerHTML = data.result;
-                    //        return;
-                    //    }
-                    //}
-                    //let data = {
-                    //    "username": event.target.username.value,
-                    //    "password": event.target.password.value
-                    //};
-
-                    //xhr.send(JSON.stringify(data));
-
-                    //}
-                }
-            } else {
-                const usernameTag = document.getElementById("usernameTag");
-                logoutDiv.style.display = "block";
-            }
+            
 
         }
     </script>

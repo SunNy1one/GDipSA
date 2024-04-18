@@ -7,7 +7,9 @@
 
 
     <link rel="stylesheet" type="text/css" href="~/css/site.css">
+    
 </head>
+
 <body>
 
     <!-- Search Bar -->
@@ -15,13 +17,10 @@
         <form asp-controller="Software" asp-action="search" method="POST">
             <input type="text" name="searchString" placeholder="Search..." />
         </form>
-        <div class="cart-container">
-
-            <button onclick="goToViewCart()" class="cart-container">
-                <img src="images/cart.jpg" alt="Cart" class="cart-icon" />
-                <span class="cart-count">@ViewBag.CartCount</span>
-            </button>
-        </div>
+        <button class="cart-container" onclick="goToViewCart()">
+            <img src="/images/cart.jpg" alt="Cart" class="cart-icon" />
+            <span class="cart-count" id="cart-count-tag"></span>
+        </button>
     </div>
     
 
@@ -35,33 +34,43 @@
                 <h2>@software.softwareName</h2>
                 <img src="@Url.Content(software.imageUrl)" alt="@software.softwareName" />
                 <p>@software.description</p>
-                <p>Price: @software.price</p>
+                <p>Price: $@software.price</p>
                 <button type="submit" onclick="addToCart(@software.softwareId)">Add to Cart</button>
 
             </div>
         }
     </div>
     <script>
+        const cartCountTag = document.getElementById("cart-count-tag");
         var softwareToPurchase = [];
         function addToCart(softwareId){
+            console.dir(softwareToPurchase);
             softwareToPurchase.push(softwareId);
+            cartCountTag.innerHTML = `${softwareToPurchase.length}`;
         }
 
         function goToViewCart() {
+            var softwareToPurchaseString = "";
+            for (var i = 0; i < softwareToPurchase.length; i++) 
+            {
+                softwareToPurchaseString = softwareToPurchaseString + `&softwaresToBuy=${softwareToPurchase[i]}`;
+            }
             var xhr = new XMLHttpRequest();
             xhr.open("POST", "/Purchase/ViewCart");
-            xhr.setRequestHeader("content-type", "application/json; charset=utf-8;");
+            console.log("parsing http request");
+            xhr.setRequestHeader("content-type", "application/json");
             xhr.onreadystatechange = function () {
-                if (this.readyState == XMLHttpRequest.DONE) {
-                    if(this.status == 200){
-
-                    }
+                if (this.readyState = XMLHttpRequest.DONE && this.status == 200) 
+                {
+                    let data = JSON.parse(this.responseText);
+                    console.log(data);
                 }
             }
-            xhr.send(JSON.stringify(softwareToPurchase));
+            xhr.send(JSON.stringify({
+                "softwaresToBuy": softwareToPurchase
+            }));
         }
     </script>
-
 
 
 </body>

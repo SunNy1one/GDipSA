@@ -7,15 +7,31 @@
 .cart-container {
     top: 20px;
     right: 20px;
+    width: 36px;
+    height: 36px;
     display: flex;
     align-items: center;
+    border-radius: 50%;
+    border: none;
+    background-color: white;
 }
 
 /* Cart Icon */
 .cart-icon {
     width: 32px; /* Adjust the width as needed */
     height: auto; /* Maintain aspect ratio */
-    margin-right: 5px;
+    margin: 0px;
+}
+
+.cart-count {
+    border-radius: 50%;
+    background-color: white;
+    font-size: 16px;
+    transform: translate(-12px, -12px);
+}
+
+.cart-button {
+    
 }
 
 /* Grid Container */

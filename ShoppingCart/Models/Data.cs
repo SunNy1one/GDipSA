@@ -31,27 +31,27 @@ namespace ShoppingCart.Models
             new Software("6", "Numerics", "Numeric tools", 99.0, "/images/numerics.jpg")
         };
 
-        public List<Purchase> purchases = new List<Purchase>()
-        {
-            new Purchase("1", "2", new DateTime(2024, 4, 10), new List<Purchase.PurchaseUnit>{
-                new Purchase.PurchaseUnit("1", "2", Guid.NewGuid().ToString())
-            }),
-            new Purchase("2", "3", new DateTime(2024, 3, 20), new List<Purchase.PurchaseUnit>{
-                new Purchase.PurchaseUnit("2", "1", Guid.NewGuid().ToString())
-            }),
-            new Purchase("3", "4", new DateTime(2024, 4, 6), new List<Purchase.PurchaseUnit>{
-                new Purchase.PurchaseUnit("3", "3", Guid.NewGuid().ToString())
-            }),
-            new Purchase("4", "2", new DateTime(2024, 3, 30), new List<Purchase.PurchaseUnit>{
-                new Purchase.PurchaseUnit("4", "4", Guid.NewGuid().ToString())
-            }),
-            new Purchase("5", "2", new DateTime(2024, 2, 25), new List<Purchase.PurchaseUnit>{
-                new Purchase.PurchaseUnit("5", "6", Guid.NewGuid().ToString())
-            }),
-            new Purchase("6", "2", new DateTime(2024, 3, 25), new List<Purchase.PurchaseUnit>{
-                new Purchase.PurchaseUnit("6", "5", Guid.NewGuid().ToString())
-            }),
-        };
+        //public List<Purchase> purchases = new List<Purchase>()
+        //{
+        //    new Purchase("1", "2", new DateTime(2024, 4, 10), new List<Purchase.PurchaseUnit>{
+        //        new Purchase.PurchaseUnit("1", softwares[1], Guid.NewGuid().ToString())
+        //    }),
+        //    new Purchase("2", "3", new DateTime(2024, 3, 20), new List<Purchase.PurchaseUnit>{
+        //        new Purchase.PurchaseUnit("2", "1", Guid.NewGuid().ToString())
+        //    }),
+        //    new Purchase("3", "4", new DateTime(2024, 4, 6), new List<Purchase.PurchaseUnit>{
+        //        new Purchase.PurchaseUnit("3", "3", Guid.NewGuid().ToString())
+        //    }),
+        //    new Purchase("4", "2", new DateTime(2024, 3, 30), new List<Purchase.PurchaseUnit>{
+        //        new Purchase.PurchaseUnit("4", "4", Guid.NewGuid().ToString())
+        //    }),
+        //    new Purchase("5", "2", new DateTime(2024, 2, 25), new List<Purchase.PurchaseUnit>{
+        //        new Purchase.PurchaseUnit("5", "6", Guid.NewGuid().ToString())
+        //    }),
+        //    new Purchase("6", "2", new DateTime(2024, 3, 25), new List<Purchase.PurchaseUnit>{
+        //        new Purchase.PurchaseUnit("6", "5", Guid.NewGuid().ToString())
+        //    }),
+        //};
 
         public void Load()
         {

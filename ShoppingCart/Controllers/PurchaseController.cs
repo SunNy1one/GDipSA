@@ -16,21 +16,23 @@ namespace ShoppingCart.Controllers
             return View();
         }
 
-        
 
-        public IActionResult ViewCart(List<string> softwareIds)
+        [HttpPost]
+        public IActionResult ViewCart(List<string> softwaresToBuy)
         {
-            Debug.WriteLine(softwareIds);
-            return View();
+            Debug.WriteLine(softwaresToBuy);
+            return Json(new {
+                softwares = softwaresToBuy
+            });
         }
 
         public IActionResult PastPurchase()
         {
             ISession session = HttpContext.Session;
-            string? userId = session.GetString("userId");
-            if(userId != null)
+            string? username = session.GetString("username");
+            if(username != null)
             {
-                var purchases = db.GetPastPurchase(userId);
+                var purchases = db.GetPastPurchase(username);
                 return View(purchases);
             }
             return View();

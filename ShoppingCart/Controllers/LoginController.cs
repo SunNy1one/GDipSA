@@ -36,7 +36,6 @@ namespace ShoppingCart.Controllers
             Response.Cookies.Append("SessionId", sessionId, options);
             ISession session = HttpContext.Session;
             session.SetString("username", user.username);
-            session.SetString("userId", user.userId ?? "");
             return RedirectToAction("Index", "Software", user);
         }
 
@@ -45,7 +44,6 @@ namespace ShoppingCart.Controllers
             Response.Cookies.Delete("SessionId");
             ISession session = HttpContext.Session;
             session.Remove("username");
-            session.Remove("userId");
             ViewData["username"] = null;
             return RedirectToAction("Index");
         }

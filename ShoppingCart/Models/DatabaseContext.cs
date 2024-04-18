@@ -96,7 +96,7 @@ namespace ShoppingCart.Models
             try
             {
                 con.Open();
-                string sql = @"SELECT PurchaseId, DateOfPurchase FROM Purchase WHERE Username = @username";
+                string sql = @"SELECT PurchaseId, DateOfPurchase FROM Purchase WHERE UserId = (Select UserId FROM User WHERE Username = @username)";
                 MySqlCommand cmd = new MySqlCommand(sql, con);
                 cmd.Parameters.Add(new MySqlParameter("username", username));
                 MySqlDataReader reader = cmd.ExecuteReader();
@@ -110,13 +110,13 @@ namespace ShoppingCart.Models
                 MySqlDataReader readerpu;
                 foreach (Purchase purchase in purchases)
                 {
-                    string sqlpu = @"SELECT s.SoftwareId, s.SoftwareName, s.ImageURL, s.Descr, ps.ActivationCode FROM PurchaseSoftware ps inner join Software s on ps.SoftwareId = s.SoftwareId where ps.PurchaseId = @purchaseid";
+                    string sqlpu = @"SELECT s.SoftwareId, s.SoftwareName, s.Price, s.ImageURL, s.Descr, ps.ActivationCode FROM PurchaseSoftware ps inner join Software s on ps.SoftwareId = s.SoftwareId where ps.PurchaseId = @purchaseid";
                     cmdpu = new MySqlCommand(sqlpu, con);
                     cmdpu.Parameters.Add(new MySqlParameter("purchaseid", purchase.purchaseId));
                     readerpu = cmdpu.ExecuteReader();
                     while(readerpu.Read())
                     {
-                        Purchase.PurchaseUnit unit = new Purchase.PurchaseUnit(purchase.purchaseId, (string)readerpu["SoftwareId"], (string)readerpu["ActivationCode"]);
+                        Purchase.PurchaseUnit unit = new Purchase.PurchaseUnit(purchase.purchaseId, new Software((string)readerpu["SoftwareId"], (string)readerpu["SoftwareName"], (string)readerpu["Descr"], Double.Parse(((decimal)readerpu["Price"]).ToString()), (string)readerpu["ImageURL"]), (string)(string)readerpu["ActivationCode"]);
                         purchase.purchaseUnits.Add(unit);
                     }
                     readerpu.Close();

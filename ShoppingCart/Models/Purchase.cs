@@ -25,11 +25,6 @@
             this.purchaseUnits = units;
         }
 
-        public void AddUnit(string softwareId)
-        {
-            purchaseUnits.Add(new PurchaseUnit(this.purchaseId, softwareId, buildActivationCode()));
-        }
-
         public void CompletePurchase()
         {
             status = PurchaseStatus.Completed;
@@ -42,13 +37,13 @@
         public class PurchaseUnit
         {
             public string purchaseId { get; set; }
-            public string softwareId { get; set; }
+            public Software software { get; set; }
             public string activationCode { get; set; }
 
-            public PurchaseUnit(string purchaseId, string softwareId, string activationCode) 
+            public PurchaseUnit(string purchaseId, Software software, string activationCode) 
             {
                 this.purchaseId = purchaseId;
-                this.softwareId = softwareId;
+                this.software = software;
                 this.activationCode = activationCode;
             } 
         }
