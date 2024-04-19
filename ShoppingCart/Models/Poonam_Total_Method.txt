@@ -1,0 +1,17 @@
+
+
+
+
+//////This is method just copy paste in purchase.cs after----- GetSoftwarecount();
+
+ public int GetPurchaseCartPrice()
+ {
+     double totalamount = 0;    
+     foreach (Software software in softwareList)
+     {
+         totalamount += software.price;
+     
+     }
+     return (int)(double)totalamount;
+
+

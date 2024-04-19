@@ -1,4 +1,7 @@
-﻿@model List<Software>
+﻿@using System.Diagnostics;
+@model List<Software>
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
 
 <!DOCTYPE html>
 <html>
@@ -43,15 +46,29 @@
     <script>
         const cartCountTag = document.getElementById("cart-count-tag");
         var softwareToPurchase = [];
+        Load();
         function addToCart(softwareId){
-            softwareToPurchase.push(softwareId);
-            cartCountTag.innerHTML = softwareToPurchase.length;
-           
-            if (Number.parseInt(softwareToPurchase.length) > 0) {
-                cartCountTag.classList.add("border-1");
-            } else {
-                cartCountTag.classList.remove("border-1");
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/Software/AddToCart?softwareId="+softwareId);
+
+            xhr.setRequestHeader("content-type", "application/json");
+            xhr.onreadystatechange = function () {
+                if (this.readyState == XMLHttpRequest.DONE && this.status == 200)
+                {
+                    softwareToPurchase.push(softwareId);
+                    cartCountTag.innerHTML = softwareToPurchase.length;
+
+                    if (Number.parseInt(softwareToPurchase.length) > 0) {
+                        cartCountTag.classList.add("border-1");
+                    } else {
+                        cartCountTag.classList.remove("border-1");
+                    }
+                }
             }
+            let data = {
+                "softwareId": softwareId
+            };
+            xhr.send(JSON.stringify(data));
         }
 
         function goToViewCart() {
@@ -61,19 +78,35 @@
                 softwareToPurchaseString = softwareToPurchaseString + `,${softwareToPurchase[i]}`;
             }
             window.location.href = "/software/ViewCart?softwareToPurchase=" + softwareToPurchaseString;
-            // var xhr = new XMLHttpRequest();
-            // xhr.open("POST", "/Software/ViewCart?softwareToPurchase="+softwareToPurchaseString);
+        }
+
+        function Load() {
             
-            // xhr.setRequestHeader("content-type", "application/json");
-            // xhr.onreadystatechange = function () {
-            //     if (this.readyState = XMLHttpRequest.DONE && this.status == 200) 
-            //     {
-            //         let data = JSON.parse(this.responseText);
-            //         console.log(data);
-            //         fetch("")
-            //     }
-            // }
-            // xhr.send();
+        @{
+            IEnumerable<string>? softKeys = HttpContextAccessor.HttpContext?.Session.Keys.Where((k) => k.StartsWith("soft"));
+            Debug.WriteLine("Writing debug in Load {0}", softKeys?.Count());
+            if (softKeys != null)
+                {
+                    foreach (string k in softKeys)
+                    {
+                        string? softId = HttpContextAccessor.HttpContext?.Session.GetString(k);
+                    Debug.WriteLine($"softid {softId}");
+                        if(softId != null)
+                        {
+                            @:softwareToPurchase.push(@softId);
+                         }
+                    }
+                    @:cartCountTag.innerHTML = softwareToPurchase.length;
+                    @:if (Number.parseInt(softwareToPurchase.length) > 0)
+                    @:{
+                    @:    cartCountTag.classList.add("border-1");
+                    @:}
+                    @:else
+                    @:{
+                    @:    cartCountTag.classList.remove("border-1");
+                    @:}
+                }
+             }
         }
     </script>
 

@@ -1,4 +1,4 @@
-﻿@model PurchaseCart
+@model PurchaseCart
 
 
 <style>
@@ -6,7 +6,7 @@
         display: inline-block;
         margin-right: 0px; /* Add some space between the elements */
         font-weight: bold; /* Optionally make the "Total:" text bold */
-        text-align: right;
+        text-align:right;
     }
 
     #totalAmount {
@@ -25,17 +25,17 @@
 <body>
     <header>
         <nav>
-            <ul style="list-style: none; padding: 0;">
-                <li><a href="/software/index">Continue Shopping</a></li>
-                <li><a href="/software/checkout">Checkout</a></li>
-            </ul>
-            @* <ul>
+	    <ul style="list-style: none; padding: 0;">
+    		<li><a href="/software/index">Continue Shopping</a></li>
+		<li><a href="/software/checkout">Checkout</a></li>
+	    </ul>
+            <ul >
                 <li style="display: inline; margin-right: 10px;"><a href="/continue-shopping">Continue Shopping</a></li>
                 <li style="display: inline;"><a href="/logout">Logout</a></li>
-            </ul> *@
+            </ul>
         </nav>
 
-        <div class="total">
+        <div  class="total">
             Total: $
         </div>
 
@@ -67,37 +67,37 @@
         }
     </div>
     <script>
-        loadViewCart();
+        
         function updateQuantity(softwareId, action) {
-
-
+           
+          
             var quantityElement = document.getElementById("quantity_" + softwareId);
-
-
+            
+           
             var currentQuantity = parseInt(quantityElement.innerText);
 
-
+            
             var newQuantity = action === "increase" ? currentQuantity + 1 : Math.max(0, currentQuantity - 1);
-
+         
             quantityElement.innerText = newQuantity;
-
+            
         }
 
-
-        function increaseQuantity(softwareId, price) {
+     
+        function increaseQuantity(softwareId , price) {
 
             var totalElement = document.getElementById("total")
             var tvalue = parseInt(totalElement.innerText);
-
+          
             var newvalue = tvalue + price;
-
+          
             totalElement.innerText = newvalue;
-
+          
 
             updateQuantity(softwareId, "increase");
         }
 
-
+        
         function decreaseQuantity(softwareId, price) {
             var totalElement = document.getElementById("total")
             var tvalue = parseInt(totalElement.innerText);
@@ -105,23 +105,28 @@
             var newvalue = tvalue - price;
 
             totalElement.innerText = newvalue;
-
+            
             updateQuantity(softwareId, "decrease");
         }
 
-        function loadViewCart() {
-            console.log('running load');
+        window.onload = function () {
+         
             var totalElement = document.getElementById("total")
+            
+      
+
             var totalPrice = '@Html.Raw(Model.GetPurchaseCartPrice())';
+            
             totalElement.innerText = totalPrice;
+
         }
 
 
 
     </script>
+    
 
-
-
+    
 </body>
 </html>
 

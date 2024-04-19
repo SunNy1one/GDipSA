@@ -1,5 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
-using MySqlX.XDevAPI.Common;
+using MySql.Data;
+using System.Reflection.PortableExecutable;
+
 
 namespace ShoppingCart.Models
 {
@@ -141,8 +143,8 @@ namespace ShoppingCart.Models
             {
                 con.Open();
                 string sql = @"select * from purchasesoftware a 
-join software b on a.softwareid=b.softwareid 
-join purchase c on c.purchaseid=a.purchaseid
+inner join software b on a.softwareid=b.softwareid 
+inner join purchase c on c.purchaseid=a.purchaseid
 where c.userId = (Select UserId FROM User where username = @username)";
                 MySqlCommand cmd = new MySqlCommand(sql, con);
                 cmd.Parameters.Add(new MySqlParameter("username", username));
@@ -150,7 +152,7 @@ where c.userId = (Select UserId FROM User where username = @username)";
                 while (reader.Read())
                 {
 
-                    PurchaseDTO tem = purchases.Where(p => p.softwareid == (string)reader["softwareid"]).FirstOrDefault();
+                    PurchaseDTO? tem = purchases.FirstOrDefault(p => p.softwareid == (string)reader["softwareid"] && p.lastdateOfPurchase == Convert.ToDateTime(reader["dateofpurchase"]), null);
 
                     if (tem != null)
                     {
@@ -196,7 +198,7 @@ where c.userId = (Select UserId FROM User where username = @username)";
             try
             {
                 con.Open();
-                string sql = @"select * from software where softwareId in ("+ss+")";
+                string sql = @"select * from software where softwareId in (" + ss + ")";
                 MySqlCommand cmd = new MySqlCommand(sql, con);
                 MySqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
@@ -214,6 +216,127 @@ where c.userId = (Select UserId FROM User where username = @username)";
                 con.Close();
             }
             return softwares;
+        }
+
+        public bool Checkout(PurchaseCart pc)
+        {
+            int totalInserted = 0;
+            int result = 0;
+            try
+            {
+                con.Open();
+                keepConnection = true;
+                string nextPurchaseId = GetNextPurchaseId();
+                string userId = GetUserIdFromUsername(pc.username!);
+                string sqlInsertPurchase = @"INSERT INTO Purchase (PurchaseId, UserId, DateOfPurchase) VALUES ('"+nextPurchaseId+"', '"+userId+"', '"+GetTodayString()+"')";
+                MySqlCommand cmd = new MySqlCommand(sqlInsertPurchase, con);
+                result += cmd.ExecuteNonQuery();
+                if (result == 1)
+                {
+                    foreach (var soft in pc.softwareList)
+                    {
+                        string actCode = Guid.NewGuid().ToString();
+                        string sqlInsertPurchaseSoftware = @"INSERT INTO PurchaseSoftware (PurchaseId, SoftwareId, ActivationCode, PurchaseStatus) VALUES ('"+nextPurchaseId+"', '"+ soft.softwareId + "', '"+actCode+"', 'Completed')";
+                        MySqlCommand cmdPurchaseSoftware = new MySqlCommand(sqlInsertPurchaseSoftware, con);
+                        totalInserted += cmdPurchaseSoftware.ExecuteNonQuery();
+                    }
+                } else
+                {
+                    return false;
+                }
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                keepConnection = false;
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                keepConnection = false;
+                con.Close();
+            }
+            return result == 1 && totalInserted == pc.softwareList.Count;
+        }
+
+        private bool keepConnection = false;
+
+        public string GetNextPurchaseId()
+        {
+            string nextPurchaseId = "";
+            try
+            {
+                EnsureConIsOpen();
+                string sql = @"select Count(*) as Total from purchase";
+                MySqlCommand cmd = new MySqlCommand(sql, con);
+                nextPurchaseId = (Convert.ToInt64(cmd.ExecuteScalar()) + 1).ToString();
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                if (!keepConnection)
+                {
+                    con.Close();
+                }
+            }
+            return nextPurchaseId;
+        }
+
+        public string GetUserIdFromUsername(string username)
+        {
+            string userId = "";
+            try
+            {
+                EnsureConIsOpen();
+                string sql = @"select UserId from User where username = @username";
+                MySqlCommand cmd = new MySqlCommand(sql, con);
+                cmd.Parameters.Add(new MySqlParameter("username", username));
+                MySqlDataReader reader = cmd.ExecuteReader();
+                if(reader.Read())
+                {
+                    userId = (string)reader["UserId"];
+                }
+                reader.Close();
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                if (!keepConnection)
+                {
+                    con.Close();
+                }
+            }
+            return userId;
+        }
+
+        public string GetTodayString()
+        {
+            DateTime today = DateTime.Today;
+            string dayString = today.Day.ToString();
+            string monthString = today.Month.ToString();
+            string yearString = today.Year.ToString();
+            if(dayString.Length == 1) {
+                dayString = "0" + dayString;
+            }
+            if(monthString.Length == 1)
+            {
+                monthString = "0" + monthString;
+            }
+            return yearString + "-" + monthString + "-" + dayString;
+        }
+
+        private void EnsureConIsOpen()
+        {
+            if(con.State == System.Data.ConnectionState.Open)
+            {
+                return;
+            }
+            con.Open();
         }
     }
 

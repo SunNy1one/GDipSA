@@ -26,6 +26,22 @@
             return softwareList.Where((s) => set.Contains(s.softwareId)).ToHashSet();
         }
 
+        public ISet<string> softwareIdsToPurchase()
+        {
+            return softwareList.Select((s) => s.softwareId).ToHashSet<string>();
+        }
+
+        public int GetPurchaseCartPrice()
+        {
+            double totalamount = 0;
+            foreach (Software software in softwareList)
+            {
+                totalamount += software.price;
+
+            }
+            return (int)(double)totalamount;
+
+        }
     }
     public class Purchase
     {

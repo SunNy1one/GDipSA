@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    var purchaes = ViewBag.purchases;
+}
+
+<form method="post" action="/CheckOut/GoToGallary">
+    <input type="submit" value="Home">
+</form>
+
+<form method="Post" action ="/Checkout/Logout">
+    <input type="submit" value="Logout">
+</form>
+
+<div class="purchases">
+    @for(int i = 0; i < purchases.Count ; i++)
+    {
+        string imageLocation = Url.Content(""); //image location here
+        
+        <div class="product">
+            <img src="@imageLocation">
+            <div>
+                <p class="purchase-date">Purchase On : @purchases[i].dateOfPurchase</p>
+                <p class="product-text">Count : @purchases[i].softwarePurchases.Count</p>
+                <span class="activation-code">Activation Code</span>
+                <select>
+                    @for(int j = 0; j < purchases[i].softwarePurchases.Count; j++)
+                    {
+                        <option>@purchases[i].softwarePurchases[j].Id</option>
+                    }
+                </select>
+            </div>
+        </div>
+    }
+</div>
+

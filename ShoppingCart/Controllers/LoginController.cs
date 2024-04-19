@@ -11,11 +11,19 @@ namespace ShoppingCart.Controllers
         public LoginController(DatabaseContext db) {
             this.db = db;
         }
+
+        [HttpGet]
         public IActionResult Index()
         {
             Response.Cookies.Delete("SessionId");
             ViewData["sessionId"] = null;
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult Index(PurchaseCart pc)
+        {
+            return View(pc);
         }
 
         public IActionResult Login(string username, string password)
@@ -34,19 +42,24 @@ namespace ShoppingCart.Controllers
             CookieOptions options = new CookieOptions();
             options.Expires = DateTime.Now.AddMinutes(10);
             Response.Cookies.Append("SessionId", sessionId, options);
-            ISession session = HttpContext.Session;
-            session.SetString("username", user.username);
+            HttpContext.Session.SetString("username", user.username);
+            if(HttpContext.Session.Keys.Contains("checking-out"))
+            {
+                return RedirectToAction("Checkout", "Software");
+            }
+
             return RedirectToAction("Index", "Software", user);
         }
 
         public IActionResult Logout()
         {
             Response.Cookies.Delete("SessionId");
-            ISession session = HttpContext.Session;
-            session.Remove("username");
+            HttpContext.Session.Clear();
             ViewData["username"] = null;
-            return RedirectToAction("Index");
+            return View("Index");
         }
+
+        
     }
 
     public class LoginResult
